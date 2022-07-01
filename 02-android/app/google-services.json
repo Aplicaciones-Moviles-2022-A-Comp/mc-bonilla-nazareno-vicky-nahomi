@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "194910766107",
+    "project_id": "movcompvnbn",
+    "storage_bucket": "movcompvnbn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194910766107:android:e087f1638129d9351e24be",
+        "android_client_info": {
+          "package_name": "com.example.examenvickybonilla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194910766107-k5q0etbma1l7j7ub09g8r7gjitnoaftj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzy5PwuH3p0Fh-iDUXvmHLdOY6aVpg9no"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194910766107-k5q0etbma1l7j7ub09g8r7gjitnoaftj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194910766107:android:c1df5126fda37bb51e24be",
+        "android_client_info": {
+          "package_name": "com.example.movcompvnbn2022a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194910766107-k5q0etbma1l7j7ub09g8r7gjitnoaftj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzy5PwuH3p0Fh-iDUXvmHLdOY6aVpg9no"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194910766107-k5q0etbma1l7j7ub09g8r7gjitnoaftj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
