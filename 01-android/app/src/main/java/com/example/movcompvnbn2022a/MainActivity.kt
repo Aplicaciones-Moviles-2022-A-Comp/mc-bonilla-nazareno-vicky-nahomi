@@ -89,6 +89,12 @@ class MainActivity : AppCompatActivity() {
                 abrirActividadParametros(ClientExplicitoParametros::class.java)
             }
 
+        val botoncrudentrenador=findViewById<Button>(R.id.btn_crud_entrenador)
+        botoncrudentrenador
+            .setOnClickListener {
+                abrirActividadParametros(BCRUDEntrenador::class.java)
+            }
+
     }
     fun irActividad(
         clase: Class<*>

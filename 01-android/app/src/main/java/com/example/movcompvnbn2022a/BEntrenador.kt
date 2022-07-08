@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class BEntrenador(
-    val nombre:String?,
-    val descripcion:String?
+    var nombre:String?,
+    var descripcion:String?
     ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
