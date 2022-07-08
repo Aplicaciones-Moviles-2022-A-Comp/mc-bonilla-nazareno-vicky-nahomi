@@ -68,6 +68,8 @@ class MainActivity : AppCompatActivity() {
         Sentry.captureMessage("testing SDK setup",SentryLevel.INFO)
         //Sentry.captureMessage("ESTO ES UNA ADVERTENCIA",SentryLevel.WARNING)
 
+        //BASE DE DATOS SQLITE
+        EBaseDeDatos.TablaEntrenador = ESqliteHelperEntrenador(this)
         val botonACicloVida=findViewById<Button>(R.id.btn_ciclo_vida)
         botonACicloVida
             .setOnClickListener{
@@ -112,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         intentExplicito.putExtra("edad",83)
         intentExplicito.putExtra(
             "entrenadorPrincipal",
-            BEntrenador("Lisa","Rhee")
+            BEntrenador(2,"Lisa","Rhee")
         )
         //ActivityResultLauncher
         startActivityForResult(intentExplicito, CODIGO_RESPUESTA_INTENT_EXPLICITO)

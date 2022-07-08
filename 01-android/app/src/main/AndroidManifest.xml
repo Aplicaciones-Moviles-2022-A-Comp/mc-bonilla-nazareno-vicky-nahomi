@@ -48,7 +48,7 @@
         -->
         <meta-data
             android:name="io.sentry.traces.sample-rate"
-            android:value="1.0" />
+            android:value="1.1" />
 
         <activity
             android:name=".MainActivity"

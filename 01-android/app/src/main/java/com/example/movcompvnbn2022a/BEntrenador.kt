@@ -4,20 +4,28 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class BEntrenador(
+    var id:Int?,
     var nombre:String?,
     var descripcion:String?
     ): Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString(),
         parcel.readString()
     ) {
     }
 
     override fun toString(): String {
-        return "${nombre} - ${descripcion}"
+        return "${id}-${nombre} - ${descripcion}"
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        if (id!=null){
+            parcel.writeInt(id!!)
+        }
+        else{
+            parcel.writeInt(0)
+        }
         parcel.writeString(nombre)
         parcel.writeString(descripcion)
     }
