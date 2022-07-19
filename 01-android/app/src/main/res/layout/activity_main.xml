@@ -11,25 +11,25 @@
         android:id="@+id/btn_ciclo_vida"
         android:layout_width="119dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="100dp"
         android:text="CicloVida"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/tv_mensaje"
         app:layout_constraintEnd_toEndOf="@+id/tv_mensaje"
-        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintHorizontal_bias="0.092"
         app:layout_constraintStart_toStartOf="@+id/tv_mensaje" />
 
     <Button
         android:id="@+id/btn_a_contador"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="100dp"
         android:layout_marginBottom="80dp"
         android:text="AContador"
         app:layout_constraintBottom_toBottomOf="@+id/tv_mensaje"
         app:layout_constraintStart_toEndOf="@+id/btn_ciclo_vida"
         app:layout_constraintTop_toTopOf="@+id/btn_ciclo_vida"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.29" />
 
     <TextView
         android:id="@+id/tv_mensaje"
@@ -42,10 +42,10 @@
         android:textColorLink="#FFC107"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.213"
+        app:layout_constraintHorizontal_bias="0.242"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.853" />
+        app:layout_constraintVertical_bias="0.807" />
 
     <Button
         android:id="@+id/btn_ir_list_view"
@@ -91,5 +91,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_ir_list_view" />
+
+    <Button
+        android:id="@+id/btn_recycler_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="RecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/btn_intent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_ir_firebase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ir Firebase"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mensaje" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
