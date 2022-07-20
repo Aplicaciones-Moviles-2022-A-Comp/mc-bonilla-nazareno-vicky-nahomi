@@ -1,5 +1,6 @@
 package com.example.examenvickybonilla
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,11 +12,20 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
     var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
     var idItemFarmacia=0
+    val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result->
+        if(result.resultCode == Activity.RESULT_OK){
+            if (result.data != null){
+
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -63,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.mi_editar->{
                 "${idItemFarmacia}"
+                abrirActividadParametros(BEditarFarmacia::class.java)
                 return true
             }
             R.id.mi_eliminar->{
@@ -72,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.mi_verMeds->{
                 "${idItemFarmacia}"
-                irActividad(AverMedicamentos::class.java)
+                abrirActividadParametros(AverMedicamentos::class.java)
                 return true
             }
             else -> super.onContextItemSelected(item)
@@ -90,43 +101,6 @@ class MainActivity : AppCompatActivity() {
         listView.adapter=adaptador
         adaptador.notifyDataSetChanged()
     }
-
-   /* override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
-    }*/
-
     fun abrirDialogo(){
         /*val listView=findViewById<ListView>(R.id.lv_farmacias)
         val adaptador=ArrayAdapter(
@@ -138,10 +112,18 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar?")
         builder.setPositiveButton(
-            "Aceptar ${idItemFarmacia}",
+            "Aceptar",
             DialogInterface.OnClickListener{
                     dialog, which ->
-                    arreglo.removeAt(0)
+                    arreglo.removeAt(idItemFarmacia)
+                val listView=findViewById<ListView>(R.id.lv_farmacias)
+                val adaptador=ArrayAdapter(
+                    this,
+                    android.R.layout.simple_expandable_list_item_1,
+                    arreglo
+                )
+                listView.adapter=adaptador
+                adaptador.notifyDataSetChanged()
             }
         )
         builder.setNegativeButton(
@@ -154,5 +136,18 @@ class MainActivity : AppCompatActivity() {
        // adaptador.notifyDataSetChanged()
 
     }
+
+
+    fun abrirActividadParametros(
+        clase:Class<*>,
+    ){
+        val intentExplicito = Intent(this, clase)
+        intentExplicito.putExtra("nombreFarmacia", arreglo["${idItemFarmacia}".toString().toInt()].nombreF)
+        intentExplicito.putExtra("idFarmacia",idItemFarmacia)
+        contenidoIntentExplicito.launch(intentExplicito)
+    }
+
+
+
 
 }

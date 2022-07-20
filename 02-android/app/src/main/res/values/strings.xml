@@ -10,11 +10,14 @@
     <string name="strCrear" translatable="false">Crear</string>
     <string name="strEditar" translatable="false">Editar</string>
     <string name="strEliminar" translatable="false">Eliminar</string>
+    <string name="strActualizar" translatable="false">Actualizar</string>
     <string name="strVerMedicamentos" translatable="false">Ver medicamentos</string>
     <string name="strRegresar" translatable="false">Rgresar</string>
     //Campos input
     <string name="strTitCrearFarmacia" translatable="false">CREAR FARMACIA</string>
     <string name="strTitCrearMedicamento" translatable="false">CREAR MEDICAMENTO</string>
+    <string name="strTitEditarFarmacia" translatable="false">EDITAR FARMACIA</string>
+    <string name="strTitEditarMedicamento" translatable="false">EDITAR MEDICAMENTO</string>
     <string name="strPrompt" translatable="false">Ingrese los campos</string>
     <string name="strNombreFar" translatable="false">Nombre: </string>
     <string name="strDireccion" translatable="false">Dirección: </string>
@@ -27,6 +30,7 @@
     <string name="strAnioCaducidad" translatable="false">Caducidad: </string>
     //colores
     <color name="colorFondo">#FBE2FF</color>
+    <color name="colorFondoFar">#E2F5FF</color>
     <color name="colorTexPrincipal">#000000</color>
     <color name="colorTexSecundario">#FBFAEA</color>
     <color name="colorPrincipal">#673AB7</color>

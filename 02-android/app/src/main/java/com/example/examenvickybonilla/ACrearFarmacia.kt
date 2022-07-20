@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 
 class ACrearFarmacia : AppCompatActivity() {
@@ -23,16 +24,17 @@ class ACrearFarmacia : AppCompatActivity() {
         val botonAddFarmacia =findViewById<Button>(R.id.btn_add_farmacia)
         botonAddFarmacia
             .setOnClickListener {
-                anadirNumero(adaptador)
+                anadirFarmacia(adaptador)
                 abrirDialogo()
             }
         adaptador.notifyDataSetChanged()
     }
-    fun anadirNumero(
+    fun anadirFarmacia(
         adaptador: ArrayAdapter<BFarmacia>
     ){
+        val nombreFarmacia=findViewById<EditText>(R.id.textNombreFarmacia)
         arreglo.add(
-            BFarmacia("Cruz Azul",null, null)
+            BFarmacia(nombreFarmacia.text.toString(),null, null)
         )
         adaptador.notifyDataSetChanged()
     }
@@ -50,8 +52,10 @@ class ACrearFarmacia : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Creado con éxito")
         builder.setPositiveButton(
-            "¿Seguir creando?",
+            "Seguir creando",
             DialogInterface.OnClickListener { dialog, which ->
+                val nombreFarmacia=findViewById<EditText>(R.id.textNombreFarmacia)
+                nombreFarmacia.setText("")
             }
         )
         builder.setNegativeButton(

@@ -27,7 +27,7 @@
         android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/btn_add_medicamento"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCrearMedicamento" />
 
@@ -38,7 +38,7 @@
         android:text="@string/strCrear"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textNombreMed"
         app:layout_constraintVertical_bias="0.457" />
