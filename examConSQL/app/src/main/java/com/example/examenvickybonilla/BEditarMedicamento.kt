@@ -10,8 +10,7 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 
-class ACrearMedicamento : AppCompatActivity() {
-
+class BEditarMedicamento : AppCompatActivity() {
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
         if(result.resultCode == Activity.RESULT_OK){
@@ -24,38 +23,23 @@ class ACrearMedicamento : AppCompatActivity() {
     var idItemFarmaci=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_acrear_medicamento)
+        setContentView(R.layout.activity_beditar_medicamento)
+       // val nombreMedic=intent.getStringExtra("nombreMedicamento")
+        val idMedic=intent.getIntExtra("idMedicament",0)
         val idFarma=intent.getIntExtra("idFarmacia",0)
         idItemFarmaci=idFarma
-        val nuevaMed=findViewById<EditText>(R.id.textNombreMed)
-        val botonCrearMeds=findViewById<Button>(R.id.btn_add_medicamento)
-        botonCrearMeds
+        val nameMed=findViewById<EditText>(R.id.editNombreM)
+        nameMed.setText(arreglo[idItemFarmaci].meds[idMedic].nombreM)
+        val botonActualizarMeds=findViewById<Button>(R.id.btn_actualizar_m)
+        botonActualizarMeds
             .setOnClickListener {
-                val nombreMed=nuevaMed.text.toString()
-                arreglo[idItemFarmaci].meds.add(BMedicamento(0,nombreMed))
-                abrirDialogo()
-            }
-    }
-    fun abrirDialogo() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Creado con éxito")
-        builder.setPositiveButton(
-            "Seguir creando",
-            DialogInterface.OnClickListener { dialog, which ->
-                val nuevaMed=findViewById<EditText>(R.id.textNombreMed)
-                nuevaMed.setText("")
-            }
-        )
-        builder.setNegativeButton(
-            "volver a  ${arreglo[idItemFarmaci].nombreF}",
-            DialogInterface.OnClickListener { dialog, which ->
+                arreglo[idItemFarmaci].meds[idMedic].nombreM=nameMed.text.toString()
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
-        )
-        val dialogo = builder.create()
-        dialogo.show()
-
     }
+
+
+
     fun abrirActividadParametros(
         clase:Class<*>,
     ){
@@ -64,14 +48,4 @@ class ACrearMedicamento : AppCompatActivity() {
         intentExplicito.putExtra("idFarmacia",idItemFarmaci)
         contenidoIntentExplicito.launch(intentExplicito)
     }
-
-
-    fun irActividad(
-        clase: Class<*>
-    ){
-        val intent= Intent(this,clase)
-        startActivity(intent) //definido en la clase AppCompatActivity() heredada
-    }
-
-
 }

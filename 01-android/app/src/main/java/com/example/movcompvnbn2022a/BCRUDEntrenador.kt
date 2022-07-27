@@ -19,7 +19,6 @@ class BCRUDEntrenador : AppCompatActivity() {
                     nombre.text.toString(),
                     descripcion.text.toString()
                 )
-
             }
         val botonBuscarBDD=findViewById<Button>(R.id.btn_buscar_bdd)
         botonBuscarBDD
