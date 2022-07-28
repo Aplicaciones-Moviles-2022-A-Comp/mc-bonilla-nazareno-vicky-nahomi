@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog
 
 class AverMedicamentos : AppCompatActivity() {
     var idItemMedicamentos=0
-    var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
     var idItemFarmaci=0
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
@@ -31,13 +31,13 @@ class AverMedicamentos : AppCompatActivity() {
         val nombreFa=intent.getStringExtra("nombreFarmacia")
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
         idItemFarmaci=idFa
-        val adaptador=ArrayAdapter(
+        /*val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
-            arreglo[idItemFarmaci].meds
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
+            //arreglo[idItemFarmaci].meds
+        )*/
+        //listView.adapter=adaptador
+       // adaptador.notifyDataSetChanged()
         val tituloFarmacia=findViewById<TextView>(R.id.textNombreDeFarmacia)
         tituloFarmacia.text=nombreFa
         val botonACrearMedicamento=findViewById<Button>(R.id.btn_crear_medicamento)
@@ -94,13 +94,13 @@ class AverMedicamentos : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
-        val adaptador= ArrayAdapter(
+       /* val adaptador= ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
             arreglo[idItemFarmaci].meds
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
+        )*/
+      //  listView.adapter=adaptador
+      //  adaptador.notifyDataSetChanged()
     }
 
     fun abrirDialogo(){
@@ -110,15 +110,15 @@ class AverMedicamentos : AppCompatActivity() {
             "Aceptar",
             DialogInterface.OnClickListener{
                     dialog, which ->
-                arreglo[idItemFarmaci].meds.removeAt(idItemMedicamentos)
+                //arreglo[idItemFarmaci].meds.removeAt(idItemMedicamentos)
                 val listView=findViewById<ListView>(R.id.lv_medicamentos)
-                val adaptador=ArrayAdapter(
+               /* val adaptador=ArrayAdapter(
                     this,
                     android.R.layout.simple_expandable_list_item_1,
                     arreglo[idItemFarmaci].meds
-                )
-                listView.adapter=adaptador
-                adaptador.notifyDataSetChanged()
+                )*/
+                //listView.adapter=adaptador
+                //adaptador.notifyDataSetChanged()
             }
         )
         builder.setNegativeButton(

@@ -7,7 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 
 class BEditarFarmacia : AppCompatActivity() {
-    var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    var arreglo: ArrayList<BFarmacia> = ArrayList<BFarmacia> ()
     var idItemFarmacia=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +21,9 @@ class BEditarFarmacia : AppCompatActivity() {
         val botonActualizar=findViewById<Button>(R.id.btn_actualizar_f)
         botonActualizar
             .setOnClickListener {
-                arreglo[idItemFarmacia].nombreF= nombreFarm.text.toString()
+               // arreglo[idItemFarmacia].nombreF= nombreFarm.text.toString()
+                BBaseDatos.TablaFarmacia!!.actualizarFarmaciaFormulario(nombreFarm.text.toString(),idItemFarmacia)
+                arreglo=BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
                 irActividad(MainActivity::class.java)
             }
     }

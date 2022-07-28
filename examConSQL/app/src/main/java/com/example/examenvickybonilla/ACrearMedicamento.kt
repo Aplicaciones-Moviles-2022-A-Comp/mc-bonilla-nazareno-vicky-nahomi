@@ -20,7 +20,7 @@ class ACrearMedicamento : AppCompatActivity() {
             }
         }
     }
-    var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
     var idItemFarmaci=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,7 @@ class ACrearMedicamento : AppCompatActivity() {
         botonCrearMeds
             .setOnClickListener {
                 val nombreMed=nuevaMed.text.toString()
-                arreglo[idItemFarmaci].meds.add(BMedicamento(0,nombreMed))
+              //  arreglo[idItemFarmaci].meds.add(BMedicamento(0,nombreMed))
                 abrirDialogo()
             }
     }
@@ -46,12 +46,12 @@ class ACrearMedicamento : AppCompatActivity() {
                 nuevaMed.setText("")
             }
         )
-        builder.setNegativeButton(
+        /*builder.setNegativeButton(
             "volver a  ${arreglo[idItemFarmaci].nombreF}",
             DialogInterface.OnClickListener { dialog, which ->
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
-        )
+        )*/
         val dialogo = builder.create()
         dialogo.show()
 
@@ -60,7 +60,7 @@ class ACrearMedicamento : AppCompatActivity() {
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-        intentExplicito.putExtra("nombreFarmacia", arreglo[idItemFarmaci].nombreF)
+        //intentExplicito.putExtra("nombreFarmacia", arreglo[idItemFarmaci].nombreF)
         intentExplicito.putExtra("idFarmacia",idItemFarmaci)
         contenidoIntentExplicito.launch(intentExplicito)
     }

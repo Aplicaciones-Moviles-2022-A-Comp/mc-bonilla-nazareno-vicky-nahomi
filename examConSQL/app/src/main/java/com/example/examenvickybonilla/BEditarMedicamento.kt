@@ -19,7 +19,7 @@ class BEditarMedicamento : AppCompatActivity() {
             }
         }
     }
-    var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
     var idItemFarmaci=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +29,11 @@ class BEditarMedicamento : AppCompatActivity() {
         val idFarma=intent.getIntExtra("idFarmacia",0)
         idItemFarmaci=idFarma
         val nameMed=findViewById<EditText>(R.id.editNombreM)
-        nameMed.setText(arreglo[idItemFarmaci].meds[idMedic].nombreM)
+        //nameMed.setText(arreglo[idItemFarmaci].meds[idMedic].nombreM)
         val botonActualizarMeds=findViewById<Button>(R.id.btn_actualizar_m)
         botonActualizarMeds
             .setOnClickListener {
-                arreglo[idItemFarmaci].meds[idMedic].nombreM=nameMed.text.toString()
+               // arreglo[idItemFarmaci].meds[idMedic].nombreM=nameMed.text.toString()
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
     }
@@ -44,7 +44,7 @@ class BEditarMedicamento : AppCompatActivity() {
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-        intentExplicito.putExtra("nombreFarmacia", arreglo[idItemFarmaci].nombreF)
+        //intentExplicito.putExtra("nombreFarmacia", arreglo[idItemFarmaci].nombreF)
         intentExplicito.putExtra("idFarmacia",idItemFarmaci)
         contenidoIntentExplicito.launch(intentExplicito)
     }

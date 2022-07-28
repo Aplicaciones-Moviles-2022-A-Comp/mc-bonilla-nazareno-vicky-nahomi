@@ -16,7 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
-    var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    var arreglo: ArrayList<BFarmacia> = ArrayList<BFarmacia> ()
+
     var idItemFarmacia=0
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
@@ -29,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
+        arreglo=BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
         val listView=findViewById<ListView>(R.id.lv_farmacias)
         val adaptador=ArrayAdapter(
             this,
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
             R.id.mi_eliminar->{
                 "${idItemFarmacia}"
                 abrirDialogo()
+
                 return true
             }
             R.id.mi_verMeds->{
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val listView=findViewById<ListView>(R.id.lv_farmacias)
+        arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
         val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
@@ -102,8 +106,9 @@ class MainActivity : AppCompatActivity() {
         adaptador.notifyDataSetChanged()
     }
     fun abrirDialogo(){
-        /*val listView=findViewById<ListView>(R.id.lv_farmacias)
-        val adaptador=ArrayAdapter(
+        arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
+        val listView=findViewById<ListView>(R.id.lv_farmacias)
+        /*val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
             arreglo
@@ -115,13 +120,21 @@ class MainActivity : AppCompatActivity() {
             "Aceptar",
             DialogInterface.OnClickListener{
                     dialog, which ->
-                    arreglo.removeAt(idItemFarmacia)
+                    //arreglo.removeAt(idItemFarmacia)
+
+                //BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(idItemFarmacia)
+                //arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
+                //versielimina(BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(idItemFarmacia))
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
+                val itemFarma=listView.getItemAtPosition(idItemFarmacia)
+                BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(getIDTablaF(itemFarma as BFarmacia).toInt())
+                arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
                 val adaptador=ArrayAdapter(
                     this,
                     android.R.layout.simple_expandable_list_item_1,
                     arreglo
                 )
+
                 listView.adapter=adaptador
                 adaptador.notifyDataSetChanged()
             }
@@ -137,16 +150,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
+    fun versielimina(elim : Boolean) {
+        val builder = AlertDialog.Builder(this)
+        if (elim){ builder.setTitle("Eliminado con éxito")}
+        else
+        {
+            builder.setTitle("FALLA ELIMINAR")
+        }
+        val dialogo = builder.create()
+        dialogo.show()
+    }
     fun abrirActividadParametros(
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-        intentExplicito.putExtra("nombreFarmacia", arreglo["${idItemFarmacia}".toString().toInt()].nombreF)
+       // intentExplicito.putExtra("nombreFarmacia", arreglo["${idItemFarmacia}".toString().toInt()].nombreF)
         intentExplicito.putExtra("idFarmacia",idItemFarmacia)
         contenidoIntentExplicito.launch(intentExplicito)
     }
-
+    fun getIDTablaF(farmacia :BFarmacia): String{
+        return ""+farmacia.idF
+    }
 
 
 
