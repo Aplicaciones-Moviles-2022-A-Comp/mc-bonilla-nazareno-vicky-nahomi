@@ -45,7 +45,8 @@ dependencies {
     //libreria
     implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
 
-
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     //logs en sentry
     implementation 'io.sentry:sentry-android:5.7.4'
     implementation 'androidx.core:core-ktx:1.7.0'
