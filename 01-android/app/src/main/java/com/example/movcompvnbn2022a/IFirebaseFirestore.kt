@@ -65,7 +65,7 @@ class IFirebaseFirestore : AppCompatActivity() {
                 }
         }
 
-        val botonIndiceCompuesto = findViewById<Button>(R.id.btn_fs_odoc)
+        val botonIndiceCompuesto = findViewById<Button>(R.id.btn_fs_ind_comp)
         botonIndiceCompuesto.setOnClickListener {
             limpiarArreglo()
             adaptador.notifyDataSetChanged()
