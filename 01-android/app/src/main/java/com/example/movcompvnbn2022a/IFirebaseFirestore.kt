@@ -9,6 +9,8 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
 
 class IFirebaseFirestore : AppCompatActivity() {
     val arreglo: ArrayList<IcitiesDto> = arrayListOf()
@@ -81,6 +83,56 @@ class IFirebaseFirestore : AppCompatActivity() {
                 }
 
         }
+        val botonCrear = findViewById<Button>(R.id.btn_fs_crear)
+        botonCrear.setOnClickListener {
+            val db=Firebase.firestore
+            val referenciaEjemploEstudiante= db.collection("ejemplo")
+                .document("123456789")
+                .collection("estudiante")
+            val identificador=Date().time
+            val datosEstudiante= hashMapOf(
+                "nombre" to "Vicky",
+                "graduado" to false,
+                "promedio" to 15.78,
+                "direccion" to hashMapOf(
+                    "direccion" to "Minas Tirith",
+                    "numeroCalle" to 1559
+                ),
+                "materias" to listOf("web","moviles","discretas","compiladores")
+            )
+
+            //id quemado
+            referenciaEjemploEstudiante
+                .document("123456789")
+                .set(datosEstudiante)
+                .addOnCompleteListener{}
+                .addOnFailureListener{}
+            // id creado en Date.time
+            referenciaEjemploEstudiante
+                .document(identificador.toString())
+                .set(datosEstudiante)
+                .addOnCompleteListener{}
+                .addOnFailureListener{}
+            //sin id
+            referenciaEjemploEstudiante
+                .add(datosEstudiante)
+                .addOnCompleteListener{}
+                .addOnFailureListener{}
+        }
+
+        val botonFirebaseEliminar = findViewById<Button>(R.id.btn_fs_eliminar)
+        botonFirebaseEliminar.setOnClickListener {
+            val db=Firebase.firestore
+            val referenciaEjemploEstudiante= db.collection("ejemplo")
+                .document("123456789")
+                .collection("estudiante")
+            referenciaEjemploEstudiante
+                .document("123456789")
+                .delete()
+                .addOnCompleteListener{}
+                .addOnFailureListener{}
+        }
+
     }
 
     fun anadirAArregloCiudad(
