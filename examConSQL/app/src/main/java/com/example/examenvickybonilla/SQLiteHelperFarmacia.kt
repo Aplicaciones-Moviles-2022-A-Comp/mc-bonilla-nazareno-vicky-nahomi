@@ -15,12 +15,133 @@ class SQLiteHelperFarmacia (contexto: Context?,
                 nombre VARCHAR (50)
                 )
             """.trimIndent()
-        db?.execSQL(scriptSQLCrearTablaFarmacia)
-    }
 
+        val scriptSQLCrearTablaMedicamento=
+            """
+                CREATE TABLE MEDICAMENTOS(
+                idf INTEGER,
+                idm INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre VARCHAR (50)
+                )
+            """.trimIndent()
+        db?.execSQL(scriptSQLCrearTablaFarmacia)
+        db?.execSQL(scriptSQLCrearTablaMedicamento)
+    }
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
 
     }
+
+    fun crearMedicamento(
+        nombre:String,
+        idf:Int
+    ): Boolean{
+        /*DOS TIPOS DE BASE DE DATOS
+        this.readableDatabase //lectura
+        this.writableDatabase //escritura*/
+        val basedatosEscritura= writableDatabase
+        val valoresAGuardar= ContentValues()
+        valoresAGuardar.put("nombre",nombre)
+        valoresAGuardar.put("idf",idf)
+        val resultadoGuardar=basedatosEscritura
+            .insert(
+                "MEDICAMENTOS",
+                null,
+                valoresAGuardar
+            )
+        basedatosEscritura.close()
+        return if (resultadoGuardar.toInt() == -1) false else true
+    }
+
+    fun consultarMedicamentoPorId(id: Int): BMedicamento{
+        // val baseDatosLectura = this.readableDatabase
+        val baseDatosLectura = readableDatabase
+        val scriptConsultarFarmacia = "SELECT * FROM MEDICAMENTOS WHERE IDM = ${id}"
+        val resultadoConsultaLectura = baseDatosLectura.rawQuery(
+            scriptConsultarFarmacia,
+            null
+        )
+        var existeMedicamento= resultadoConsultaLectura.moveToFirst()
+        var medicamentoEncontrado = BMedicamento(0,0, "")
+        if(existeMedicamento){
+            do{
+                var idf = resultadoConsultaLectura.getInt(0) // columna indice 0 -> IDf
+                var idm = resultadoConsultaLectura.getInt(1) // columna indice 1 -> IDm
+                val nombre = resultadoConsultaLectura.getString(2) // Columna indice 2 -> NOMBRE
+                if(id!=null){
+                    medicamentoEncontrado.idM = id
+                    medicamentoEncontrado.nombreM= nombre
+                }
+            }while (resultadoConsultaLectura.moveToNext())
+        }
+        resultadoConsultaLectura.close()
+        baseDatosLectura.close()
+        return medicamentoEncontrado
+    }
+
+    fun mostrarMedicamentos(idf: Int): ArrayList<BMedicamento> {
+        var arregegloMedicamento : ArrayList<BMedicamento> = ArrayList<BMedicamento>()
+        val baseDatosLectura = readableDatabase
+        val scriptConsultarMedicamento = "SELECT * FROM MEDICAMENTOS WHERE IDF = ${idf}"
+        val resultadoConsultaLectura = baseDatosLectura.rawQuery(
+            scriptConsultarMedicamento,
+            null
+        )
+        var existeMedicamento = resultadoConsultaLectura.moveToFirst()
+        //var FarmaciaEncontrado = BFarmacia(0, "")
+        if(existeMedicamento){
+            do{
+                var idf = resultadoConsultaLectura.getInt(0) // columna indice 0 -> IDf
+                var idm = resultadoConsultaLectura.getInt(1) // columna indice 1 -> IDm
+                val nombre = resultadoConsultaLectura.getString(2) // Columna indice 2 -> NOMBRE
+                if(idm!=null){
+                    arregegloMedicamento.add(
+                        BMedicamento(idf,idm, nombre)
+                    )
+                }
+            }while (resultadoConsultaLectura.moveToNext())
+        }else{
+
+        }
+        resultadoConsultaLectura.close()
+        baseDatosLectura.close()
+        return arregegloMedicamento
+    }
+    fun eliminarMedicamentoFormulario(id: Int): Boolean{
+        //        val conexionEscritura = this.writableDatabase
+        val conexionEscritura = writableDatabase
+        val resultadoEliminacion = conexionEscritura
+            .delete(
+                "MEDICAMENTOS",
+                "idm=?",
+                arrayOf(
+                    id.toString()
+                )
+            )
+        conexionEscritura.close()
+        return if (resultadoEliminacion.toInt() == -1) false else true
+    }
+    fun actualizarMedicamentoFormulario(
+        nombre: String,
+        idActualizar: Int
+    ): Boolean {
+        val conexionEscritura = writableDatabase
+        val valoresAActualizar = ContentValues()
+        valoresAActualizar.put("nombre", nombre)
+        val resultadoActualizacion = conexionEscritura
+            .update(
+                "MEDICAMENTO", // Nombre tabla
+                valoresAActualizar,  // Valores a actualizar
+                "id=?", // Clausula Where
+                arrayOf(
+                    idActualizar.toString()
+                ) // Parametros clausula Where
+            )
+        conexionEscritura.close()
+        return if (resultadoActualizacion == -1) false else true
+
+    }
+
+
 
     fun crearFarmacia(
         nombre:String
@@ -112,20 +233,7 @@ class SQLiteHelperFarmacia (contexto: Context?,
         conexionEscritura.close()
         return if (resultadoEliminacion.toInt() == -1) false else true
     }
-    /*fun eliminarFarmaciaFormulario(nombre: String): Boolean{
-        //        val conexionEscritura = this.writableDatabase
-        val conexionEscritura = writableDatabase
-        val resultadoEliminacion = conexionEscritura
-            .delete(
-                "FARMACIA",
-                "nombre=${nombre}",
-                arrayOf(
-                    nombre.toString()
-                )
-            )
-        conexionEscritura.close()
-        return if (resultadoEliminacion.toInt() == -1) false else true
-    }*/
+
     fun actualizarFarmaciaFormulario(
         nombre: String,
         idActualizar: Int

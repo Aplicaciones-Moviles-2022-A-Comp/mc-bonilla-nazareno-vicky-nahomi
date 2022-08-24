@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
     var arreglo: ArrayList<BFarmacia> = ArrayList<BFarmacia> ()
-
+var idfa=0
     var idItemFarmacia=0
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
@@ -75,6 +75,9 @@ class MainActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.mi_editar->{
                 "${idItemFarmacia}"
+                val listView=findViewById<ListView>(R.id.lv_farmacias)
+                val itemFarma=listView.getItemAtPosition(idItemFarmacia)
+                idfa=getIDTablaF(itemFarma as BFarmacia).toInt()
                 abrirActividadParametros(BEditarFarmacia::class.java)
                 return true
             }
@@ -86,6 +89,9 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.mi_verMeds->{
                 "${idItemFarmacia}"
+                val listView=findViewById<ListView>(R.id.lv_farmacias)
+                val itemFarma=listView.getItemAtPosition(idItemFarmacia)
+                idfa=getIDTablaF(itemFarma as BFarmacia).toInt()
                 abrirActividadParametros(AverMedicamentos::class.java)
                 return true
             }
@@ -108,23 +114,12 @@ class MainActivity : AppCompatActivity() {
     fun abrirDialogo(){
         arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
         val listView=findViewById<ListView>(R.id.lv_farmacias)
-        /*val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )*/
-
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar?")
         builder.setPositiveButton(
             "Aceptar",
             DialogInterface.OnClickListener{
                     dialog, which ->
-                    //arreglo.removeAt(idItemFarmacia)
-
-                //BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(idItemFarmacia)
-                //arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
-                //versielimina(BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(idItemFarmacia))
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
                 BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(getIDTablaF(itemFarma as BFarmacia).toInt())
@@ -134,7 +129,6 @@ class MainActivity : AppCompatActivity() {
                     android.R.layout.simple_expandable_list_item_1,
                     arreglo
                 )
-
                 listView.adapter=adaptador
                 adaptador.notifyDataSetChanged()
             }
@@ -145,27 +139,14 @@ class MainActivity : AppCompatActivity() {
         )
         val dialogo = builder.create()
         dialogo.show()
-       // listView.adapter=adaptador
-       // adaptador.notifyDataSetChanged()
-
     }
 
-    fun versielimina(elim : Boolean) {
-        val builder = AlertDialog.Builder(this)
-        if (elim){ builder.setTitle("Eliminado con éxito")}
-        else
-        {
-            builder.setTitle("FALLA ELIMINAR")
-        }
-        val dialogo = builder.create()
-        dialogo.show()
-    }
+
     fun abrirActividadParametros(
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-       // intentExplicito.putExtra("nombreFarmacia", arreglo["${idItemFarmacia}".toString().toInt()].nombreF)
-        intentExplicito.putExtra("idFarmacia",idItemFarmacia)
+        intentExplicito.putExtra("idFarmacia",idfa)
         contenidoIntentExplicito.launch(intentExplicito)
     }
     fun getIDTablaF(farmacia :BFarmacia): String{

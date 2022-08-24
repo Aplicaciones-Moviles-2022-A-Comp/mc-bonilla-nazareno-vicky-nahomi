@@ -32,7 +32,10 @@ class ACrearMedicamento : AppCompatActivity() {
         botonCrearMeds
             .setOnClickListener {
                 val nombreMed=nuevaMed.text.toString()
-              //  arreglo[idItemFarmaci].meds.add(BMedicamento(0,nombreMed))
+                BBaseDatos.TablaFarmacia!!.crearMedicamento(
+                    nombreMed,
+                    idItemFarmaci
+                )
                 abrirDialogo()
             }
     }
@@ -46,12 +49,12 @@ class ACrearMedicamento : AppCompatActivity() {
                 nuevaMed.setText("")
             }
         )
-        /*builder.setNegativeButton(
-            "volver a  ${arreglo[idItemFarmaci].nombreF}",
+        builder.setNegativeButton(
+            "volver a  ${ BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idItemFarmaci).nombreF}",
             DialogInterface.OnClickListener { dialog, which ->
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
-        )*/
+        )
         val dialogo = builder.create()
         dialogo.show()
 
@@ -60,7 +63,6 @@ class ACrearMedicamento : AppCompatActivity() {
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-        //intentExplicito.putExtra("nombreFarmacia", arreglo[idItemFarmaci].nombreF)
         intentExplicito.putExtra("idFarmacia",idItemFarmaci)
         contenidoIntentExplicito.launch(intentExplicito)
     }

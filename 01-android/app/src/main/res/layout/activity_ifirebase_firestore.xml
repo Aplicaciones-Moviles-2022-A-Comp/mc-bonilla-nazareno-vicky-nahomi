@@ -13,15 +13,15 @@
         android:text="Order by"
         app:layout_constraintBottom_toTopOf="@+id/lv_firestore"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.175" />
+        app:layout_constraintVertical_bias="0.049" />
 
     <ListView
         android:id="@+id/lv_firestore"
         android:layout_width="410dp"
-        android:layout_height="478dp"
+        android:layout_height="360dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -36,10 +36,10 @@
         android:text="Obtener Doc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.882"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintVertical_bias="0.093" />
 
     <Button
         android:id="@+id/btn_fs_ind_comp"
@@ -48,10 +48,10 @@
         android:text="ICompuesto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintHorizontal_bias="0.204"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
+        app:layout_constraintVertical_bias="0.112" />
 
     <Button
         android:id="@+id/btn_fs_datos_prueba"
@@ -69,11 +69,11 @@
         android:id="@+id/btn_fs_crear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="88dp"
         android:text="Crear"
         app:layout_constraintEnd_toEndOf="@+id/btn_fs_odoc"
-        app:layout_constraintHorizontal_bias="0.171"
+        app:layout_constraintHorizontal_bias="0.274"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_fs_ind_comp" />
 
@@ -87,4 +87,24 @@
         app:layout_constraintHorizontal_bias="0.67"
         app:layout_constraintStart_toEndOf="@+id/btn_fs_crear"
         app:layout_constraintTop_toBottomOf="@+id/btn_fs_odoc" />
+
+    <Button
+        android:id="@+id/btn_fs_epaginar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:text="EmpezarPaginar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_fs_crear" />
+
+    <Button
+        android:id="@+id/btn_fs_paginar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Paginar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.451"
+        app:layout_constraintStart_toEndOf="@+id/btn_fs_epaginar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_fs_eliminar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

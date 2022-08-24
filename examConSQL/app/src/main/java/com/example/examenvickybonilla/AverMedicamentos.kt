@@ -14,7 +14,7 @@ import androidx.appcompat.app.AlertDialog
 
 class AverMedicamentos : AppCompatActivity() {
     var idItemMedicamentos=0
-    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    var arreglo: ArrayList<BMedicamento> =  ArrayList<BMedicamento> ()
     var idItemFarmaci=0
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
@@ -28,18 +28,20 @@ class AverMedicamentos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aver_medicamentos)
         val idFa=intent.getIntExtra("idFarmacia",0)
-        val nombreFa=intent.getStringExtra("nombreFarmacia")
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
+       // BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
+        arreglo=BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idFa)
         idItemFarmaci=idFa
-        /*val adaptador=ArrayAdapter(
+        val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
-            //arreglo[idItemFarmaci].meds
-        )*/
-        //listView.adapter=adaptador
-       // adaptador.notifyDataSetChanged()
+            arreglo
+        )
+        listView.adapter=adaptador
+       adaptador.notifyDataSetChanged()
+
         val tituloFarmacia=findViewById<TextView>(R.id.textNombreDeFarmacia)
-        tituloFarmacia.text=nombreFa
+        tituloFarmacia.text=BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idFa).nombreF
         val botonACrearMedicamento=findViewById<Button>(R.id.btn_crear_medicamento)
         botonACrearMedicamento
             .setOnClickListener{
@@ -94,31 +96,34 @@ class AverMedicamentos : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
-       /* val adaptador= ArrayAdapter(
+       val adaptador= ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
-            arreglo[idItemFarmaci].meds
-        )*/
-      //  listView.adapter=adaptador
-      //  adaptador.notifyDataSetChanged()
+            arreglo
+        )
+        listView.adapter=adaptador
+       adaptador.notifyDataSetChanged()
     }
 
     fun abrirDialogo(){
+        arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar?")
         builder.setPositiveButton(
             "Aceptar",
             DialogInterface.OnClickListener{
                     dialog, which ->
-                //arreglo[idItemFarmaci].meds.removeAt(idItemMedicamentos)
                 val listView=findViewById<ListView>(R.id.lv_medicamentos)
-               /* val adaptador=ArrayAdapter(
-                    this,
-                    android.R.layout.simple_expandable_list_item_1,
-                    arreglo[idItemFarmaci].meds
-                )*/
-                //listView.adapter=adaptador
-                //adaptador.notifyDataSetChanged()
+                val itemMeds=listView.getItemAtPosition(idItemMedicamentos)
+                BBaseDatos.TablaFarmacia!!.eliminarMedicamentoFormulario(getIDTablaM(itemMeds as BMedicamento).toInt())
+                arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
+                val adaptador=ArrayAdapter(
+                    this,android.R.layout.simple_expandable_list_item_1,
+                    arreglo
+
+                )
+                listView.adapter=adaptador
+                adaptador.notifyDataSetChanged()
             }
         )
         builder.setNegativeButton(
@@ -139,6 +144,9 @@ class AverMedicamentos : AppCompatActivity() {
         contenidoIntentExplicito.launch(intentExplicito)
     }
 
+    fun getIDTablaM(medica :BMedicamento): String{
+        return ""+medica.idM
+    }
 
 
 }

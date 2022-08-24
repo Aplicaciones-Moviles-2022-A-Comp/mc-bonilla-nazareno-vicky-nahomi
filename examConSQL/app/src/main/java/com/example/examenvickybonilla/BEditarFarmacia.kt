@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ListView
 
 class BEditarFarmacia : AppCompatActivity() {
     //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
@@ -14,14 +15,15 @@ class BEditarFarmacia : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beditar_farmacia)
         val idFa=intent.getIntExtra("idFarmacia",0)
-        val nombreFa=intent.getStringExtra("nombreFarmacia")
+        val nombreFa= BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idFa).nombreF
         idItemFarmacia=idFa
         val nombreFarm=findViewById<EditText>(R.id.editNombreF)
-        nombreFarm.setText(nombreFa)
+       nombreFarm.setText(nombreFa)
+        //val listView=findViewById<ListView>(R.id.lv_farmacias)
+       //val itemFarma=listView.getItemAtPosition(idItemFarmacia)
         val botonActualizar=findViewById<Button>(R.id.btn_actualizar_f)
         botonActualizar
             .setOnClickListener {
-               // arreglo[idItemFarmacia].nombreF= nombreFarm.text.toString()
                 BBaseDatos.TablaFarmacia!!.actualizarFarmaciaFormulario(nombreFarm.text.toString(),idItemFarmacia)
                 arreglo=BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
                 irActividad(MainActivity::class.java)
@@ -33,5 +35,7 @@ class BEditarFarmacia : AppCompatActivity() {
         val intent= Intent(this,clase)
         startActivity(intent) //definido en la clase AppCompatActivity() heredada
     }
-
+    fun getIDTablaF(farmacia :BFarmacia): String{
+        return ""+farmacia.idF
+    }
 }
