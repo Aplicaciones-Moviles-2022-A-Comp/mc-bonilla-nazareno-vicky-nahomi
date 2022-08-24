@@ -19,9 +19,7 @@ class ACrearFarmacia : AppCompatActivity() {
         botonAddFarmacia
             .setOnClickListener {
                 val nombreFarmacia=findViewById<EditText>(R.id.textNombreFarmacia)
-                BBaseDatos.TablaFarmacia!!.crearFarmacia(
-                    nombreFarmacia.text.toString()
-                )
+
                 abrirDialogo()
             }
     }

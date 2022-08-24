@@ -30,23 +30,15 @@ var idfa=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
-        arreglo=BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
+
 
         val botonACrearFarmacia=findViewById<Button>(R.id.btn_crear_farmacia)
         botonACrearFarmacia
             .setOnClickListener{
                 irActividad(ACrearFarmacia::class.java)
             }
-        adaptador.notifyDataSetChanged()
-        registerForContextMenu(listView)
+
+        //registerForContextMenu(listView)
     }
 
     fun irActividad(
@@ -101,19 +93,10 @@ var idfa=0
 
     override fun onResume() {
         super.onResume()
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
-        arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-        adaptador.notifyDataSetChanged()
+
     }
     fun abrirDialogo(){
-        arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
-        val listView=findViewById<ListView>(R.id.lv_farmacias)
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar?")
         builder.setPositiveButton(
@@ -122,15 +105,7 @@ var idfa=0
                     dialog, which ->
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
-                BBaseDatos.TablaFarmacia!!.eliminarFarmaciaFormulario(getIDTablaF(itemFarma as BFarmacia).toInt())
-                arreglo= BBaseDatos.TablaFarmacia!!.mostrarFarmacias()
-                val adaptador=ArrayAdapter(
-                    this,
-                    android.R.layout.simple_expandable_list_item_1,
-                    arreglo
-                )
-                listView.adapter=adaptador
-                adaptador.notifyDataSetChanged()
+
             }
         )
         builder.setNegativeButton(
@@ -153,6 +128,17 @@ var idfa=0
         return ""+farmacia.idF
     }
 
+    fun actualizarvista(){
+        val listView=findViewById<ListView>(R.id.lv_medicamentos)
+
+        val adaptador=ArrayAdapter(
+            this,
+            android.R.layout.simple_expandable_list_item_1,
+            arreglo
+        )
+        listView.adapter=adaptador
+        adaptador.notifyDataSetChanged()
+    }
 
 
 }

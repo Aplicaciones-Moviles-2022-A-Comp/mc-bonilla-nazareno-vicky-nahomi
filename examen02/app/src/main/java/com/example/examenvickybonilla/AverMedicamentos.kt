@@ -29,22 +29,9 @@ class AverMedicamentos : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aver_medicamentos)
 
-        val idFa=intent.getIntExtra("idFarmacia",0)
-        val listView=findViewById<ListView>(R.id.lv_medicamentos)
-        arreglo=BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idFa)
-        val adaptador=ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-       // BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
-
-        idItemFarmaci=idFa
-
 
         val tituloFarmacia=findViewById<TextView>(R.id.textNombreDeFarmacia)
-        tituloFarmacia.text=BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idFa).nombreF
+
         val botonACrearMedicamento=findViewById<Button>(R.id.btn_crear_medicamento)
         botonACrearMedicamento
             .setOnClickListener{
@@ -55,9 +42,7 @@ class AverMedicamentos : AppCompatActivity() {
             irActividad(MainActivity::class.java)
         }
 
-        adaptador.notifyDataSetChanged()
 
-        registerForContextMenu(listView)
     }
 
     fun irActividad(
@@ -107,7 +92,7 @@ class AverMedicamentos : AppCompatActivity() {
     }
 
     fun abrirDialogo(){
-        arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Desea eliminar?")
         builder.setPositiveButton(
@@ -116,7 +101,7 @@ class AverMedicamentos : AppCompatActivity() {
                     dialog, which ->
                 val listView=findViewById<ListView>(R.id.lv_medicamentos)
                 val itemMeds=listView.getItemAtPosition(idItemMedicamentos)
-                BBaseDatos.TablaFarmacia!!.eliminarMedicamentoFormulario(getIDTablaM(itemMeds as BMedicamento).toInt())
+
                 actualizarvista()
             }
         )
@@ -145,7 +130,7 @@ class AverMedicamentos : AppCompatActivity() {
 
     fun actualizarvista(){
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
-        arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
+
         val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,

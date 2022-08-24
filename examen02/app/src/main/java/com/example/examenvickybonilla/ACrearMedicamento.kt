@@ -32,10 +32,7 @@ class ACrearMedicamento : AppCompatActivity() {
         botonCrearMeds
             .setOnClickListener {
                 val nombreMed=nuevaMed.text.toString()
-                BBaseDatos.TablaFarmacia!!.crearMedicamento(
-                    nombreMed,
-                    idItemFarmaci
-                )
+
                 abrirDialogo()
             }
     }
@@ -50,7 +47,8 @@ class ACrearMedicamento : AppCompatActivity() {
             }
         )
         builder.setNegativeButton(
-            "volver a  ${ BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idItemFarmaci).nombreF}",
+            //"volver a  ${ BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idItemFarmaci).nombreF}",
+           "regresar",
             DialogInterface.OnClickListener { dialog, which ->
                 abrirActividadParametros(AverMedicamentos::class.java)
             }

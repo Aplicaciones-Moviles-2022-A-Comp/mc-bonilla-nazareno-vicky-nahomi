@@ -26,15 +26,15 @@ class BEditarMedicamento : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beditar_medicamento)
         val idMedic=intent.getIntExtra("idMedicament",0)
-        val nombreMedic=BBaseDatos.TablaFarmacia!!.consultarMedicamentoPorId(idMedic).nombreM
+
        // val idFarma=intent.getIntExtra("idFarmacia",0)
         idItemFarmaci=intent.getIntExtra("idFarmacia",0)
         val nameMed=findViewById<EditText>(R.id.editNombreM)
-        nameMed.setText(nombreMedic)
+
         val botonActualizarMeds=findViewById<Button>(R.id.btn_actualizar_m)
         botonActualizarMeds
             .setOnClickListener {
-                BBaseDatos.TablaFarmacia!!.actualizarMedicamentoFormulario(nameMed.text.toString(),idMedic)
+
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
     }
