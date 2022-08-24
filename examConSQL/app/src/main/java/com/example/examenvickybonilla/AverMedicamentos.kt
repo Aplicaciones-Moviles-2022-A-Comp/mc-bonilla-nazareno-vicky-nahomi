@@ -16,6 +16,7 @@ class AverMedicamentos : AppCompatActivity() {
     var idItemMedicamentos=0
     var arreglo: ArrayList<BMedicamento> =  ArrayList<BMedicamento> ()
     var idItemFarmaci=0
+    var idmed=0
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
         if(result.resultCode == Activity.RESULT_OK){
@@ -27,18 +28,20 @@ class AverMedicamentos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_aver_medicamentos)
+
         val idFa=intent.getIntExtra("idFarmacia",0)
         val listView=findViewById<ListView>(R.id.lv_medicamentos)
-       // BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
         arreglo=BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idFa)
-        idItemFarmaci=idFa
         val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
             arreglo
         )
         listView.adapter=adaptador
-       adaptador.notifyDataSetChanged()
+       // BBaseDatos.TablaFarmacia= SQLiteHelperFarmacia(this)
+
+        idItemFarmaci=idFa
+
 
         val tituloFarmacia=findViewById<TextView>(R.id.textNombreDeFarmacia)
         tituloFarmacia.text=BBaseDatos.TablaFarmacia!!.consultarfarmaciaPorId(idFa).nombreF
@@ -51,6 +54,8 @@ class AverMedicamentos : AppCompatActivity() {
         botonVolver.setOnClickListener {
             irActividad(MainActivity::class.java)
         }
+
+        adaptador.notifyDataSetChanged()
 
         registerForContextMenu(listView)
     }
@@ -81,6 +86,9 @@ class AverMedicamentos : AppCompatActivity() {
         return when(item.itemId){
             R.id.mi_editarM->{
                 "${idItemMedicamentos}"
+                val listView=findViewById<ListView>(R.id.lv_medicamentos)
+                val itemMeds=listView.getItemAtPosition(idItemMedicamentos)
+                idmed=getIDTablaM(itemMeds as BMedicamento).toInt()
                 abrirActividadParametros(BEditarMedicamento::class.java)
                 return true
             }
@@ -95,14 +103,7 @@ class AverMedicamentos : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val listView=findViewById<ListView>(R.id.lv_medicamentos)
-       val adaptador= ArrayAdapter(
-            this,
-            android.R.layout.simple_expandable_list_item_1,
-            arreglo
-        )
-        listView.adapter=adaptador
-       adaptador.notifyDataSetChanged()
+        actualizarvista()
     }
 
     fun abrirDialogo(){
@@ -116,14 +117,7 @@ class AverMedicamentos : AppCompatActivity() {
                 val listView=findViewById<ListView>(R.id.lv_medicamentos)
                 val itemMeds=listView.getItemAtPosition(idItemMedicamentos)
                 BBaseDatos.TablaFarmacia!!.eliminarMedicamentoFormulario(getIDTablaM(itemMeds as BMedicamento).toInt())
-                arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
-                val adaptador=ArrayAdapter(
-                    this,android.R.layout.simple_expandable_list_item_1,
-                    arreglo
-
-                )
-                listView.adapter=adaptador
-                adaptador.notifyDataSetChanged()
+                actualizarvista()
             }
         )
         builder.setNegativeButton(
@@ -138,9 +132,10 @@ class AverMedicamentos : AppCompatActivity() {
         clase:Class<*>,
     ){
         val intentExplicito = Intent(this, clase)
-        //intentExplicito.putExtra("nombreMedicamento", arreglo[idItemFarmaci].meds[idItemMedicamentos].nombreM.toString())
-        intentExplicito.putExtra("idMedicament",idItemMedicamentos)
+
+        intentExplicito.putExtra("idMedicament",idmed)
         intentExplicito.putExtra("idFarmacia",idItemFarmaci)
+        //intentExplicito.putExtra("idFarmacia",idItemFarmaci)
         contenidoIntentExplicito.launch(intentExplicito)
     }
 
@@ -148,5 +143,16 @@ class AverMedicamentos : AppCompatActivity() {
         return ""+medica.idM
     }
 
+    fun actualizarvista(){
+        val listView=findViewById<ListView>(R.id.lv_medicamentos)
+        arreglo= BBaseDatos.TablaFarmacia!!.mostrarMedicamentos(idItemFarmaci)
+        val adaptador=ArrayAdapter(
+            this,
+            android.R.layout.simple_expandable_list_item_1,
+            arreglo
+        )
+        listView.adapter=adaptador
+        adaptador.notifyDataSetChanged()
+    }
 
 }

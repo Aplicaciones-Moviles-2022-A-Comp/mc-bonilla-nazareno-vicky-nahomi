@@ -19,21 +19,22 @@ class BEditarMedicamento : AppCompatActivity() {
             }
         }
     }
-    //var arreglo: ArrayList<BFarmacia> = BBaseDatos.arregloFarmacia
+    var arreglo: ArrayList<BMedicamento> = ArrayList<BMedicamento> ()
     var idItemFarmaci=0
+    //var idmed=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_beditar_medicamento)
-       // val nombreMedic=intent.getStringExtra("nombreMedicamento")
         val idMedic=intent.getIntExtra("idMedicament",0)
-        val idFarma=intent.getIntExtra("idFarmacia",0)
-        idItemFarmaci=idFarma
+        val nombreMedic=BBaseDatos.TablaFarmacia!!.consultarMedicamentoPorId(idMedic).nombreM
+       // val idFarma=intent.getIntExtra("idFarmacia",0)
+        idItemFarmaci=intent.getIntExtra("idFarmacia",0)
         val nameMed=findViewById<EditText>(R.id.editNombreM)
-        //nameMed.setText(arreglo[idItemFarmaci].meds[idMedic].nombreM)
+        nameMed.setText(nombreMedic)
         val botonActualizarMeds=findViewById<Button>(R.id.btn_actualizar_m)
         botonActualizarMeds
             .setOnClickListener {
-               // arreglo[idItemFarmaci].meds[idMedic].nombreM=nameMed.text.toString()
+                BBaseDatos.TablaFarmacia!!.actualizarMedicamentoFormulario(nameMed.text.toString(),idMedic)
                 abrirActividadParametros(AverMedicamentos::class.java)
             }
     }

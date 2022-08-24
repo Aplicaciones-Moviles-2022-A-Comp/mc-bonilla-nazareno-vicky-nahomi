@@ -129,9 +129,9 @@ class SQLiteHelperFarmacia (contexto: Context?,
         valoresAActualizar.put("nombre", nombre)
         val resultadoActualizacion = conexionEscritura
             .update(
-                "MEDICAMENTO", // Nombre tabla
+                "MEDICAMENTOS", // Nombre tabla
                 valoresAActualizar,  // Valores a actualizar
-                "id=?", // Clausula Where
+                "idm=?", // Clausula Where
                 arrayOf(
                     idActualizar.toString()
                 ) // Parametros clausula Where

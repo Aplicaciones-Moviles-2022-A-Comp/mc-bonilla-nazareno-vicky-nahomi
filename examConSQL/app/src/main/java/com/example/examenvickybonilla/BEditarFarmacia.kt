@@ -19,8 +19,6 @@ class BEditarFarmacia : AppCompatActivity() {
         idItemFarmacia=idFa
         val nombreFarm=findViewById<EditText>(R.id.editNombreF)
        nombreFarm.setText(nombreFa)
-        //val listView=findViewById<ListView>(R.id.lv_farmacias)
-       //val itemFarma=listView.getItemAtPosition(idItemFarmacia)
         val botonActualizar=findViewById<Button>(R.id.btn_actualizar_f)
         botonActualizar
             .setOnClickListener {
