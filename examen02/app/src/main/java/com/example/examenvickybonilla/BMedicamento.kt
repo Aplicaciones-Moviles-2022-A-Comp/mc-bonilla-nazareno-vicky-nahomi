@@ -1,8 +1,7 @@
 package com.example.examenvickybonilla
 
 class BMedicamento(
-    var idF:Int?,
-    var idM:Int?,
+    var idM:Long?,
     var nombreM:String?
 ){
 

@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import java.util.*
 
 class ACrearFarmacia : AppCompatActivity() {
 
@@ -19,9 +22,20 @@ class ACrearFarmacia : AppCompatActivity() {
         botonAddFarmacia
             .setOnClickListener {
                 val nombreFarmacia=findViewById<EditText>(R.id.textNombreFarmacia)
-
+                addFarmacia(nombreFarmacia.text.toString())
+                nombreFarmacia.setText("")
                 abrirDialogo()
             }
+    }
+    fun addFarmacia(nombreF: String){
+        val db=Firebase.firestore
+        val farmacia=db.collection("examen02")
+        val idF= Date().time
+        val dataFarm = hashMapOf(
+            "idFarmacia" to idF,
+            "nombreF" to nombreF
+        )
+        farmacia.document(idF.toString()).set(dataFarm)
     }
     fun abrirDialogo() {
         val builder = AlertDialog.Builder(this)

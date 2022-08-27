@@ -14,38 +14,35 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
     var arreglo: ArrayList<BFarmacia> = ArrayList<BFarmacia> ()
-var idfa=0
+    var idfa: Long=0
+    var nomfa=""
     var idItemFarmacia=0
+
     val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result->
         if(result.resultCode == Activity.RESULT_OK){
             if (result.data != null){
-
+                val data = result.data
             }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        val listView=findViewById<ListView>(R.id.lv_farmacias)
+        cargarFarmaciasInicial()
         val botonACrearFarmacia=findViewById<Button>(R.id.btn_crear_farmacia)
         botonACrearFarmacia
             .setOnClickListener{
                 irActividad(ACrearFarmacia::class.java)
             }
-
-        //registerForContextMenu(listView)
-    }
-
-    fun irActividad(
-        clase: Class<*>
-    ){
-        val intent= Intent(this,clase)
-        startActivity(intent) //definido en la clase AppCompatActivity() heredada
+        registerForContextMenu(listView)
     }
 
     override fun onCreateContextMenu(
@@ -69,21 +66,21 @@ var idfa=0
                 "${idItemFarmacia}"
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
-                idfa=getIDTablaF(itemFarma as BFarmacia).toInt()
+                idfa=getIDTablaF(itemFarma as BFarmacia).toLong()
+                nomfa=getNombreTablaF(itemFarma as BFarmacia).toString()
                 abrirActividadParametros(BEditarFarmacia::class.java)
                 return true
             }
             R.id.mi_eliminar->{
                 "${idItemFarmacia}"
                 abrirDialogo()
-
                 return true
             }
             R.id.mi_verMeds->{
                 "${idItemFarmacia}"
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
-                idfa=getIDTablaF(itemFarma as BFarmacia).toInt()
+                idfa=getIDTablaF(itemFarma as BFarmacia).toLong()
                 abrirActividadParametros(AverMedicamentos::class.java)
                 return true
             }
@@ -93,8 +90,16 @@ var idfa=0
 
     override fun onResume() {
         super.onResume()
-
+        actualizarvista()
     }
+
+    fun irActividad(
+        clase: Class<*>
+    ){
+        val intent= Intent(this,clase)
+        startActivity(intent) //definido en la clase AppCompatActivity() heredada
+    }
+
     fun abrirDialogo(){
 
         val builder = AlertDialog.Builder(this)
@@ -105,7 +110,8 @@ var idfa=0
                     dialog, which ->
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
-
+                val idfa=getIDTablaF(itemFarma as BFarmacia)
+                deleteFarmacia(idfa)
             }
         )
         builder.setNegativeButton(
@@ -127,10 +133,27 @@ var idfa=0
     fun getIDTablaF(farmacia :BFarmacia): String{
         return ""+farmacia.idF
     }
+    fun getNombreTablaF(farmacia :BFarmacia): String{
+        return ""+farmacia.nombreF
+    }
 
     fun actualizarvista(){
-        val listView=findViewById<ListView>(R.id.lv_medicamentos)
+        val db = Firebase.firestore
+        val farmaciaRefUnico = db
+            .collection("examen02")
+        farmaciaRefUnico
+            .get()
+            .addOnSuccessListener {
+                arreglo = ArrayList<BFarmacia>()
+                for (farmacia in it){
+                    addFarmacia(arreglo,farmacia)
+                }
+                actualizarListView()
+            }
+    }
 
+    fun actualizarListView(){
+        val listView=findViewById<ListView>(R.id.lv_farmacias)
         val adaptador=ArrayAdapter(
             this,
             android.R.layout.simple_expandable_list_item_1,
@@ -138,6 +161,41 @@ var idfa=0
         )
         listView.adapter=adaptador
         adaptador.notifyDataSetChanged()
+    }
+
+    fun cargarFarmaciasInicial(){
+        val db = Firebase.firestore
+        val farmaciaRefUnico = db
+            .collection("examen02")
+        farmaciaRefUnico
+            .get()
+            .addOnSuccessListener {
+                arreglo = ArrayList<BFarmacia>()
+                for (farmacia in it){
+                        addFarmacia(arreglo,farmacia)
+                }
+                actualizarvista()
+            }
+    }
+    fun addFarmacia(
+        nuevoArreglo: ArrayList<BFarmacia>,
+        farmacia: QueryDocumentSnapshot
+    ){
+        nuevoArreglo.add(
+            BFarmacia(
+                farmacia.get("idFa") as Long?,
+                farmacia.get("nombreFa") as String?
+            )
+        )
+    }
+
+    fun deleteFarmacia(
+        nombreFarm : String
+    ){
+        val db = Firebase.firestore
+        val farmacia = db.collection("examen02")
+        farmacia.document(nombreFarm).delete()
+        actualizarvista()
     }
 
 
