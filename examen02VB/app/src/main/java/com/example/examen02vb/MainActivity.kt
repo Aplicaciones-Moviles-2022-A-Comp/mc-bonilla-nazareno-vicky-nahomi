@@ -36,11 +36,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val listView=findViewById<ListView>(R.id.lv_farmacias)
-        cargarFarmaciasInicial()
+        actualizarvista()
         val botonACrearFarmacia=findViewById<Button>(R.id.btn_crear_farmacia)
         botonACrearFarmacia
             .setOnClickListener{
-                irActividad(ACrearFarmacia::class.java)
+                abrirActividadParametros(ACrearFarmacia::class.java)
             }
         registerForContextMenu(listView)
     }
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
                 idfa=getIDTablaF(itemFarma as BFarmacia).toLong()
-                nomfa=getNombreTablaF(itemFarma as BFarmacia).toString()
+                nomfa=getNombreTablaF(itemFarma as BFarmacia)
                 abrirActividadParametros(BEditarFarmacia::class.java)
                 return true
             }
@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                 val listView=findViewById<ListView>(R.id.lv_farmacias)
                 val itemFarma=listView.getItemAtPosition(idItemFarmacia)
                 idfa=getIDTablaF(itemFarma as BFarmacia).toLong()
+                nomfa=getNombreTablaF(itemFarma as BFarmacia)
                 abrirActividadParametros(AverMedicamentos::class.java)
                 return true
             }
@@ -128,6 +129,7 @@ class MainActivity : AppCompatActivity() {
     ){
         val intentExplicito = Intent(this, clase)
         intentExplicito.putExtra("idFarmacia",idfa)
+        intentExplicito.putExtra("nombreF",nomfa)
         contenidoIntentExplicito.launch(intentExplicito)
     }
     fun getIDTablaF(farmacia :BFarmacia): String{
@@ -148,11 +150,8 @@ class MainActivity : AppCompatActivity() {
                 for (farmacia in it){
                     addFarmacia(arreglo,farmacia)
                 }
-                abrirDialogo1("D: "+arreglo.toString())
                 actualizarListView()
             }
-            .addOnFailureListener {  }
-        abrirDialogo1(arreglo.toString())
     }
 
     fun actualizarListView(){
@@ -186,12 +185,11 @@ class MainActivity : AppCompatActivity() {
     ){
         nuevoArreglo.add(
             BFarmacia(
-                farmacia.get("idFa") as Long?,
-                farmacia.get("nombreFa") as String?
+                farmacia.get("idFarmacia") as Long?,
+                farmacia.get("nombreF") as String?
             )
         )
     }
-
     fun deleteFarmacia(
         nombreFarm : String
     ){
@@ -200,21 +198,4 @@ class MainActivity : AppCompatActivity() {
         farmacia.document(nombreFarm).delete()
         actualizarvista()
     }
-    fun abrirDialogo1(string: String){
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Desea eliminar?")
-        builder.setPositiveButton(
-            "${string}",
-            DialogInterface.OnClickListener{
-                    dialog, which ->
-
-
-            }
-        )
-        val dialogo = builder.create()
-        dialogo.show()
-    }
-
-
 }

@@ -183,8 +183,8 @@ class MainActivity : AppCompatActivity() {
     ){
         nuevoArreglo.add(
             BFarmacia(
-                farmacia.get("idFa") as Long?,
-                farmacia.get("nombreFa") as String?
+                farmacia.get("idFarmacia") as Long?,
+                farmacia.get("nombreF") as String?
             )
         )
     }
