@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "264266442360",
+    "project_id": "music-bbf37",
+    "storage_bucket": "music-bbf37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264266442360:android:b5089e34825b7c954eef8d",
+        "android_client_info": {
+          "package_name": "com.example.ytmusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264266442360-faa1vrntniihem02a2fkkgmpi7dqpvpk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaK_6hd4TuLVYkhekb-mzg1FxEDGmntyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264266442360-faa1vrntniihem02a2fkkgmpi7dqpvpk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
