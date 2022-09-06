@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Vicky.bonilla/Documents/Github/mc-bonilla-nazareno-vicky-nahomi/calculadoraimc/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/Vicky.bonilla/Documents/Github/mc-bonilla-nazareno-vicky-nahomi/calculadoraimc/app/src/main/res/layout/activity_editar_registro.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vicky.bonilla/Documents/Github/mc-bonilla-nazareno-vicky-nahomi/calculadoraimc/app/src/main/res/layout/activity_main.xml" value="0.19" />
+        <entry key="..\:/Users/Vicky.bonilla/Documents/Github/mc-bonilla-nazareno-vicky-nahomi/calculadoraimc/app/src/main/res/layout/activity_resultado_ic.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Vicky.bonilla/Documents/Github/mc-bonilla-nazareno-vicky-nahomi/calculadoraimc/app/src/main/res/menu/menueditar.xml" value="0.25" />
       </map>
     </option>
   </component>

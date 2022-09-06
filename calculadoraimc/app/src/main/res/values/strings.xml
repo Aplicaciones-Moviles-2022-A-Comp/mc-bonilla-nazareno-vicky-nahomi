@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">calculadoraimc</string>
+    <!--Títulos-->
+    <string name="tit_inicio">BMI calculator</string>
+    <string name="tit_datos_imc">Ingresa tus datos</string>
+    <string name="tit_imc_calculado">Tu IMC es:</string>
+    <string name="tit_historial">Historial</string>
+    <!--Botones-->
+    <string name="btn_calcular_imc_s">Calcular IMC</string>
+    <string name="btn_ver_historial_s">Ver historial</string>
+    <string name="btn_ver_grafica_s">Ver gráfica</string>
+    <string name="btn_actualizar_s">Calcular IMC</string>
+
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -8,14 +20,6 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="title_activity_historia_imc">HistoriaIMC</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>
