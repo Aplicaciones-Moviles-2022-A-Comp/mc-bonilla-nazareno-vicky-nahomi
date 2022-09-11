@@ -10,7 +10,13 @@
     <color name="btn_principal">#BC098A</color>
     <color name="btn_entrar">#070563</color>
     <color name="incorrecto">#D42363</color>
-
-
+    <!--Añadido-->
+    <color name="bk">#7FFFFFFF</color>
+    <color name="green">#2DE300</color>
+    <color name="blue">#237FD4</color>
+    <color name="red">#E71010</color>
+    <color name="yellow">#FDCA15</color>
+    <color name="bk_grafica">#FFF9FC</color>
+    <color name="pink">#BC098A</color>
 
 </resources>

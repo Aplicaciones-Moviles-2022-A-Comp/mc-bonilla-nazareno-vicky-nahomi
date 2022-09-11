@@ -1,40 +1,120 @@
 package com.example.calculadoraimc
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.calculadoraimc.databinding.ActivityHistoriaImcBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HistoriaIMC : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
-private lateinit var binding: ActivityHistoriaImcBinding
+    var arreglo = ArrayList<IMCData>()
+    var correoGlobal:String? = ""
+    var imc = 0.00
+    lateinit var rvHistorial:RecyclerView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-     binding = ActivityHistoriaImcBinding.inflate(layoutInflater)
-     setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
-
-        val navController = findNavController(R.id.nav_host_fragment_content_historia_imc)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+    val contenidoIntentExplicito = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result->
+        if(result.resultCode == Activity.RESULT_OK){
+            if (result.data != null){
+                val data = result.data
+                //Log.i("intent-epn","${data?.getStringExtra("nombreModificado")}")
+            }
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-    val navController = findNavController(R.id.nav_host_fragment_content_historia_imc)
-    return navController.navigateUp(appBarConfiguration)
-            || super.onSupportNavigateUp()
+    @SuppressLint("SourceLockedOrientationActivity")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_historia_imc)
+        requestedOrientation= ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        val correo = intent.getStringExtra("correo")
+        correoGlobal=correo
+        rvHistorial = findViewById<RecyclerView>(R.id.rv_historial)
+        cargarHistorial(rvHistorial,correo)
+        val btnVerGrafica = findViewById<Button>(R.id.btn_ver_grafica)
+        btnVerGrafica.setOnClickListener {
+            abrirActividadParametros(GraficaIMC::class.java)
+        }
+        val btnImgHistorial = findViewById<ImageButton>(R.id.btnimg_atras_historial)
+        btnImgHistorial.setOnClickListener {
+            abrirActividadParametros(DatosIMC::class.java)
+        }
     }
+
+    fun inicializarRV(
+        lista:ArrayList<IMCData>,
+        recyclerView: RecyclerView
+    ){
+        val adaptador = AdaptadorHistorial(
+            this,
+            lista,
+            recyclerView
+        )
+        recyclerView.adapter = adaptador
+        recyclerView.itemAnimator = androidx.recyclerview.widget.DefaultItemAnimator()
+        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        adaptador.notifyDataSetChanged()
+    }
+
+    fun cargarHistorial(
+        recyclerView: RecyclerView,
+        correo:String?
+    ){
+        val db = Firebase.firestore
+        val imcRefUnico = db
+            .collection("usuarios")
+            .document("${correo}")
+            .collection("historial")
+
+        imcRefUnico
+            .get()
+            .addOnSuccessListener {
+                arreglo = ArrayList<IMCData>()
+                for (imcitem in it) {
+                    aniadirIMC(arreglo, imcitem)
+                }
+                inicializarRV(arreglo,recyclerView)
+            }
+
+    }
+
+    fun aniadirIMC(
+        arregloNuevo: ArrayList<IMCData>,
+        imc: QueryDocumentSnapshot
+    ) {
+        arregloNuevo.add(
+            IMCData(
+                imc.get("fecha") as String?,
+                imc.get("imc") as Double?,
+                imc.get("peso") as Double?,
+                imc.get("altura") as Double?
+            )
+        )
+    }
+
+    fun abrirActividadParametros(
+        clase:Class<*>
+    ){
+        val intentExplicito = Intent(this, clase)
+        intentExplicito.putExtra("correo",correoGlobal)
+        intentExplicito.putExtra("imc", imc)
+        contenidoIntentExplicito.launch(intentExplicito)
+    }
+
 }
